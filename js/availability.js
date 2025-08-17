@@ -1,11 +1,11 @@
 // Get the next N Tuesdays starting from today
-function getNextTuesdays(count = 5) {
+function getNextTuesdays(count = 4) {
   let dates = [];
   let today = new Date();
   let day = today.getDay(); // 0=dimanche, 1=lundi, 2=mardi...
 
   // How many days until next Tuesday
-  let daysUntilTuesday = (2 - day + 7) % 7;
+  let daysUntilTuesday = ((2 - day + 7) % 7) + 7;
   if (daysUntilTuesday === 0) daysUntilTuesday = 7; // skip today if it's Tuesday
 
   let nextTuesday = new Date(today);
@@ -61,3 +61,4 @@ document.getElementById("availability-form").addEventListener("submit", function
     result.innerHTML = "<p>Aucune date sélectionnée.</p>";
   }
 });
+
