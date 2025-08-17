@@ -28,3 +28,36 @@ function formatDate(date) {
     day: "numeric"
   });
 }
+
+// Generate checkboxes
+const container = document.getElementById("checkboxes");
+const tuesdays = getNextTuesdays(5);
+
+tuesdays.forEach(date => {
+  const label = document.createElement("label");
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.name = "tuesday[]";
+  checkbox.value = date.toISOString().split("T")[0];
+  label.appendChild(checkbox);
+  label.append(" " + formatDate(date));
+  container.appendChild(label);
+  container.appendChild(document.createElement("br"));
+});
+
+// Handle form submission
+document.getElementById("availability-form").addEventListener("submit", function(e) {
+  e.preventDefault(); // stop form reload
+
+  const checked = Array.from(document.querySelectorAll("input[name='tuesday[]']:checked"))
+    .map(cb => cb.nextSibling.textContent.trim());
+
+  const result = document.getElementById("result");
+  if (checked.length > 0) {
+    result.innerHTML = "<h3>Vous avez choisi :</h3><ul>" +
+      checked.map(date => `<li>${date}</li>`).join("") +
+      "</ul>";
+  } else {
+    result.innerHTML = "<p>Aucune date sélectionnée.</p>";
+  }
+});
